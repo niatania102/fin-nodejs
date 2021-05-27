@@ -44,8 +44,26 @@ exports.tambahforum = function(req,res){
             if(error){
                 connection.log(error);
             }else{
-                response.ok("Berhasil menambahkan data!", res);
+                response.ok("Berhasil menambahkan data forum!", res);
             }
         });
 };
 
+//mengubah data forum berdasarkan id
+exports.ubahforum = function(req,res){
+    var fid = req.body.forum_id;
+    var uid = req.body.user_id;
+    var topic = req.body.topic;
+    var content = req.body.content;
+    var timemodified = new Date().toLocaleString();
+
+    connection.query('UPDATE forum_header SET topic=?, content=? ,timemodified=? WHERE user_id=? AND forum_id=?',
+        [topic,content,timemodified,uid,fid],
+        function(error, rows,fields){
+            if(error){
+                connection.log(error);
+            }else{
+                response.ok("Berhasil ubah data forum!", res);
+            }
+        });
+};
