@@ -56,7 +56,7 @@ exports.ubahforum = function(req,res){
     var uid = req.body.user_id;
     var topic = req.body.topic;
     var content = req.body.content;
-    var timemodified = new Date(req.body.timemodified);
+    var timemodified = new Date();
 
     connection.query('UPDATE forum_header SET topic=?, content=? ,timemodified=? WHERE user_id=? AND forum_id=?',
         [topic,content,timemodified,uid,fid],
@@ -80,5 +80,112 @@ exports.tampilgroupforum = function(req,res){
             }
         }
     )
-
 }
+
+//menambah data forum reply
+exports.tambahforumbalasan = function(req,res){
+    var fid = req.body.forum_id;
+    var uid = req.body.user_id;
+    var replies = req.body.replies;
+    var timecreated = new Date();
+    var timemodified = new Date();
+
+    connection.query('INSERT INTO forum_replies (forum_id,user_id,replies,timecreated,timemodified) VALUES(?,?,?,?,?)',
+        [fid,uid,replies,timecreated,timemodified],
+        function(error,rows,fields){
+            if(error){
+                connection.log(error);
+            }else {
+                response.ok("Berhasil menambahkan data forum!", res)
+            }
+        });
+};
+
+//mengubah data forum reply berdasarkan id
+exports.ubahforumbalasan = function(req,res) {
+    var rid = req.body.reply_id;
+    var uid = req.body.user_id;
+    var replies = req.body.replies;
+    var timemodified = new Date();
+
+    connection.query('UPDATE forum_replies SET replies=?, timemodified=? WHERE reply_id=? AND user_id=?',
+        [replies,timemodified,rid,uid],
+        function(error,rows,fields){
+            if(error){
+                connection.log(error);
+            }else {
+                response.ok("Berhasil ubah data forum reply!", res)
+            }
+        });
+};
+
+//menampilkan balasan jurnal
+exports.tampilgroupbalasan = function(req,res){
+    connection.query('SELECT fh.topic, fh.content, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id ORDER BY topic',
+        function(error,rows,fields){
+            if(error){
+                connection.log(error)
+            }else {
+                response.oknested(rows,res)
+            }
+        });
+}
+
+//menambah jurnal
+exports.tambahjurnal = function(req,res) {
+    var uid = req.body.user_id;
+    var content = req.body.content;
+    var timecreated = new Date();
+    var timemodified = new Date();
+
+    connection.query('INSERT INTO journal (user_id,content,timecreated,timemodified) VALUES(?,?,?,?)',
+        [uid,content,timecreated,timemodified],
+        function(error,rows,fields){
+            if(error){
+                console.log(error);
+            }else {
+                response.ok("Berhasil tambah jurnal", res)
+            }
+        })
+}
+
+//mengubah jurnal
+exports.ubahjurnal = function(req,res) {
+    var jid = req.body.journal_id;
+    var uid = req.body.user_id;
+    var content = req.body.content;
+    var timemodified = new Date();
+
+    connection.query('UPDATE journal SET content=? ,timemodified=? WHERE journal_id=? AND user_id=?',
+        [content,timemodified,jid,uid],
+        function(error,rows,fields){
+            if(error){
+                console.log(error);
+            }else {
+                response.ok("Berhasil ubah jurnal", res)
+            }
+        });
+}
+
+//tampilkan semua jurnal
+exports.tampilsemuajurnal = function(req,res){
+    connection.query('SELECT * FROM journal', function(error, rows,fields){
+        if(error){
+            connection.log(error);
+        }else{
+            response.ok(rows, res);
+        }
+    });
+};
+
+//tampilkan semua jurnal berdasarkan id
+exports.tampiljurnalid = function(req,res){
+    let id = req.params.id;
+    connection.query('SELECT * FROM journal WHERE journal_id = ? ', [id], function(error, rows,fields){
+        if(error){
+            connection.log(error);
+        }else{
+            response.ok(rows, res);
+        }
+    });
+};
