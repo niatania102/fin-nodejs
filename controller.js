@@ -2,6 +2,7 @@
 
 var response = require('./res');
 var connection = require('./koneksi');
+const conn = require('./koneksi');
 
 exports.index = function(req,res){
     response.ok("jalan",res);
@@ -67,3 +68,17 @@ exports.ubahforum = function(req,res){
             }
         });
 };
+
+//menampilkan topic forum group
+exports.tampilgroupforum = function(req,res){
+    connection.query('SELECT u.username, u.full_name, f.forum_id, f.topic, f.content FROM forum_header AS f JOIN users AS u WHERE f.user_id = u.id',
+        function(error, rows,fields){
+            if(error){
+                connection.log(error);
+            }else{
+                response.oknested(rows, res);
+            }
+        }
+    )
+
+}
