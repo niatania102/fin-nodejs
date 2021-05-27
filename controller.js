@@ -36,8 +36,8 @@ exports.tambahforum = function(req,res){
     var uid = req.body.user_id;
     var topic = req.body.topic;
     var content = req.body.content;
-    var timecreated = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    var timemodified = new Date().toLocaleString();
+    var timecreated = new Date();
+    var timemodified = new Date();
 
     connection.query('INSERT INTO forum_header (user_id,topic,content,timecreated,timemodified) VALUES(?,?,?,?,?)',
         [uid,topic,content,timecreated,timemodified],
@@ -56,7 +56,7 @@ exports.ubahforum = function(req,res){
     var uid = req.body.user_id;
     var topic = req.body.topic;
     var content = req.body.content;
-    var timemodified = new Date().toLocaleString();
+    var timemodified = new Date(req.body.timemodified);
 
     connection.query('UPDATE forum_header SET topic=?, content=? ,timemodified=? WHERE user_id=? AND forum_id=?',
         [topic,content,timemodified,uid,fid],
