@@ -29,3 +29,23 @@ exports.tampilberdasarkanid = function(req,res){
         }
     });
 };
+
+//menambah data forum header
+exports.tambahforum = function(req,res){
+    var uid = req.body.user_id;
+    var topic = req.body.topic;
+    var content = req.body.content;
+    var timecreated = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var timemodified = new Date().toLocaleString();
+
+    connection.query('INSERT INTO forum_header (user_id,topic,content,timecreated,timemodified) VALUES(?,?,?,?,?)',
+        [uid,topic,content,timecreated,timemodified],
+        function(error, rows,fields){
+            if(error){
+                connection.log(error);
+            }else{
+                response.ok("Berhasil menambahkan data!", res);
+            }
+        });
+};
+

@@ -12,4 +12,6 @@ module.exports = function(app){
     app.route('/tampil/:id')
         .get(jsonku.tampilberdasarkanid);
 
+    app.route('/tambahforum')
+        .post(jsonku.tambahforum);
 }
