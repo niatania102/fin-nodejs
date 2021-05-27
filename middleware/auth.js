@@ -23,14 +23,13 @@ exports.registrasi = function(req,res){
         timemodified: new Date()
     }
     //Unique Email, belum ada email sebelumnya
-    var query = "SELECT email FROM ?? WHERE ??";
+    var query = "SELECT email FROM ?? WHERE ??=?";
     var table = ["users","email",post.email];
 
     query = mysql.format(query,table);
 
-    connection.query(query, function(error,rows)){
-        if(error)
-        {
+    connection.query(query, function(error,rows){
+        if(error){
             console.log(error);
         }else{
             if(rows.length == 0){ //kalau tidak ada email sebelumnya
@@ -38,16 +37,15 @@ exports.registrasi = function(req,res){
                 var table = ["users"];
                 query = mysql.format(query,table);
                 connection.query(query, post, function(error,rows){
-                    if(error)
-                    {
+                    if(error){
                         console.log(error);
-                    }else{
+                    }else {
                         response.ok("Berhasil menambah data user baru",res);
                     }
                 });
             }else{
-                response.ok("Email sudah terdaftar!");
+                response.ok("Email sudah terdaftar!",res);
             }
         }
-    }
+    })
 }
