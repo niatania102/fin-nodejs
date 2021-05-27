@@ -38,4 +38,14 @@ module.exports = function(app){
         .get(jsonku.tampilsemuajurnal)
     app.route('/tampiljurnal/:id')
         .get(jsonku.tampiljurnalid)
+
+    //konsultasi
+    app.route('/tambahkonsultasi')
+        .post(jsonku.tambahkonsultasi)
+    app.route('/ubahkonsultasi')
+        .put(jsonku.ubahkonsultasi)
+    app.route('/tampilkonsultasi')
+        .get(jsonku.tampilsemuakonsultasi)
+    app.route('/tampilkonsultasi/:id')
+        .get(jsonku.tampilkonsultasiid)
 }

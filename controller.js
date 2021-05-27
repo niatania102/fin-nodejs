@@ -69,7 +69,7 @@ exports.ubahforum = function(req,res){
         });
 };
 
-//menampilkan topic forum group
+//menampilkan topic forum header group
 exports.tampilgroupforum = function(req,res){
     connection.query('SELECT u.username, u.full_name, f.forum_id, f.topic, f.content FROM forum_header AS f JOIN users AS u WHERE f.user_id = u.id',
         function(error, rows,fields){
@@ -182,6 +182,76 @@ exports.tampilsemuajurnal = function(req,res){
 exports.tampiljurnalid = function(req,res){
     let id = req.params.id;
     connection.query('SELECT * FROM journal WHERE journal_id = ? ', [id], function(error, rows,fields){
+        if(error){
+            connection.log(error);
+        }else{
+            response.ok(rows, res);
+        }
+    });
+};
+
+
+//menambah jadwal konsultasi
+exports.tambahkonsultasi = function(req,res){
+    var topic = req.body.topic;
+    var content = req.body.content;
+    var filename = req.body.filename;
+    var start_cons = req.body.start_consultation;
+    var end_cons = req.body.end_consultation;
+    var timecreated = new Date()
+    var timemodified = new Date()
+    var user_id = req.body.user_id;
+    var employee_id = req.body.employee_id
+
+    connection.query('INSERT INTO consultations (topic,content,filename,start_consultation,end_consultation,timecreated,timemodified,user_id,employee_id) VALUES (?,?,?,?,?,?,?,?,?)',
+        [topic,content,filename,start_cons,end_cons,timecreated,timemodified,user_id,employee_id],
+        function(error,rows,fields){
+            if(error){
+                connection.log(error);
+            }else {
+                response.ok("Berhasil menambahkan konsultasi!");
+            }
+        });
+}
+
+//mengubah jadwal konsultasi
+exports.ubahkonsultasi = function(req,res) {
+    var cid = req.body.consultation_id;
+    var topic = req.body.topic;
+    var content = req.body.content;
+    var filename = req.body.filename;
+    var start_cons = req.body.start_consultation;
+    var end_cons = req.body.end_consultation;
+    var timemodified = new Date()
+    var user_id = req.body.user_id;
+    var employee_id = req.body.employee_id;
+
+    connection.query('UPDATE consultations SET topic=?, content=?, filename=?, start_consultation=?, end_consultation=?, timemodified=?, user_id=?, employee_id=? WHERE consultation_id=?',
+        [topic,content,filename,start_cons,end_cons,timemodified,user_id,employee_id,cid],
+        function(error,rows,fields){
+            if(error){
+                connection.log(error);
+            }else {
+                response.ok("Berhasil ubah konsultasi!")
+            }
+        })
+}
+
+//tampilkan semua konsultasi
+exports.tampilsemuakonsultasi = function(req,res){
+    connection.query('SELECT * FROM consultations', function(error, rows,fields){
+        if(error){
+            connection.log(error);
+        }else{
+            response.ok(rows, res);
+        }
+    });
+};
+
+//tampilkan konsultasi berdasarkan id
+exports.tampilkonsultasiid = function(req,res){
+    let id = req.params.id;
+    connection.query('SELECT * FROM consultations WHERE consultation_id = ? ', [id], function(error, rows,fields){
         if(error){
             connection.log(error);
         }else{
