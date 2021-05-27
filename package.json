@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/niatania102/fin-nodejs/issues"
   },
-  "homepage": "https://github.com/niatania102/fin-nodejs#readme"
+  "homepage": "https://github.com/niatania102/fin-nodejs#readme",
+  "dependencies": {
+    "jsonwebtoken":"^8.5.1",
+    "ip":"^1.1.5",
+    "morgan":"^1.10.0"
+  }
 }
