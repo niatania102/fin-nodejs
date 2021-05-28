@@ -22,7 +22,7 @@ exports.tampilsemuauser = function(req,res){
 //tampilkan semua user berdasarkan id
 exports.tampilberdasarkanid = function(req,res){
     let id = req.params.id;
-    connection.query('SELECT * FROM users WHERE users_id = ? ', [id], function(error, rows,fields){
+    connection.query('SELECT * FROM users WHERE id = ? ', [id], function(error, rows,fields){
         if(error){
             connection.log(error);
         }else{
