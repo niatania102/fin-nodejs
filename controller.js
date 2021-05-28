@@ -121,7 +121,10 @@ exports.ubahforumbalasan = function(req,res) {
 
 //menampilkan balasan jurnal
 exports.tampilgroupbalasan = function(req,res){
-    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.reply_id, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id ORDER BY topic',
+    let forum_id = req.params.forum_id;
+
+    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.reply_id, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id WHERE fh.forum_id = ? ORDER BY topic'
+    [forum_id],
         function(error,rows,fields){
             if(error){
                 connection.log(error)

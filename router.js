@@ -42,7 +42,7 @@ module.exports = function(app){
         .post(jsonku.tambahforumbalasan)
     app.route('/ubahforumbalasan')
         .put(jsonku.ubahforumbalasan)
-    app.route('/tampilreply')
+    app.route('/tampilreply/:forum_id')
         .get(jsonku.tampilgroupbalasan)
 
     //journal
