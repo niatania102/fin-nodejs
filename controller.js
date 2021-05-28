@@ -121,12 +121,12 @@ exports.ubahforumbalasan = function(req,res) {
 
 //menampilkan balasan jurnal
 exports.tampilgroupbalasan = function(req,res){
-    connection.query('SELECT fh.topic, fh.content, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id ORDER BY topic',
+    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id ORDER BY topic',
         function(error,rows,fields){
             if(error){
                 connection.log(error)
             }else {
-                response.oknested(rows,res)
+                response.oknestedreply(rows,res)
             }
         });
 }
