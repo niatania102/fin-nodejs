@@ -209,7 +209,7 @@ exports.tambahkonsultasi = function(req,res){
             if(error){
                 connection.log(error);
             }else {
-                response.ok("Berhasil menambahkan konsultasi!");
+                response.ok("Berhasil menambahkan konsultasi!", res);
             }
         });
 }
@@ -226,13 +226,13 @@ exports.ubahkonsultasi = function(req,res) {
     var user_id = req.body.user_id;
     var employee_id = req.body.employee_id;
 
-    connection.query('UPDATE consultations SET topic=?, content=?, filename=?, start_consultation=?, end_consultation=?, timemodified=?, user_id=?, employee_id=? WHERE consultation_id=?',
-        [topic,content,filename,start_cons,end_cons,timemodified,user_id,employee_id,cid],
+    connection.query('UPDATE consultations SET topic=?, content=?, filename=?, start_consultation=?, end_consultation=?, timemodified=? WHERE consultation_id=? AND user_id=? AND employee_id=?',
+        [topic,content,filename,start_cons,end_cons,timemodified,cid,user_id,employee_id],
         function(error,rows,fields){
             if(error){
                 connection.log(error);
             }else {
-                response.ok("Berhasil ubah konsultasi!")
+                response.ok("Berhasil ubah konsultasi!", res)
             }
         })
 }
