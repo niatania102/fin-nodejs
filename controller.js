@@ -76,7 +76,7 @@ exports.tampilgroupforum = function(req,res){
             if(error){
                 connection.log(error);
             }else{
-                response.oknested(rows, res);
+                response.ok(rows, res);
             }
         }
     )
@@ -126,7 +126,7 @@ exports.tampilgroupbalasan = function(req,res){
             if(error){
                 connection.log(error)
             }else {
-                response.oknestedreply(rows,res)
+                response.ok(rows,res)
             }
         });
 }
