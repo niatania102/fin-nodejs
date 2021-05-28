@@ -2,7 +2,6 @@
 
 var response = require('./res');
 var connection = require('./koneksi');
-const conn = require('./koneksi');
 
 exports.index = function(req,res){
     response.ok("jalan",res);
@@ -259,3 +258,4 @@ exports.tampilkonsultasiid = function(req,res){
         }
     });
 };
+

@@ -1,7 +1,25 @@
 'use strict';
 
+const multer = require('multer');
+const path = require("path");
+
+//storage engine
+const storage = multer.diskStorage({
+    destination: 'certificate',
+    filename: (req,file,cb)=>{ //cb=callback
+        return cb(null, Date.now() + '.' + file.mimetype.split('/')[1])
+    }
+})
+const upload = multer({storage: storage});
+
+
+
+
 module.exports = function(app){
     var jsonku = require('./controller');
+
+    //upload image
+    app.post('/upload',upload.single('file'),(req,res)=>{})
 
     app.route('/')
         .get(jsonku.index);
@@ -48,4 +66,5 @@ module.exports = function(app){
         .get(jsonku.tampilsemuakonsultasi)
     app.route('/tampilkonsultasi/:id')
         .get(jsonku.tampilkonsultasiid)
+
 }
