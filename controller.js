@@ -181,7 +181,7 @@ exports.tampilsemuajurnal = function(req,res){
 //tampilkan semua jurnal berdasarkan id
 exports.tampiljurnalid = function(req,res){
     let id = req.params.id;
-    connection.query('SELECT * FROM journal WHERE journal_id = ? ', [id], function(error, rows,fields){
+    connection.query('SELECT * FROM journal WHERE user_id = ? ', [id], function(error, rows,fields){
         if(error){
             connection.log(error);
         }else{
