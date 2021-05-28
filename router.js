@@ -42,8 +42,10 @@ module.exports = function(app){
         .post(jsonku.tambahforumbalasan)
     app.route('/ubahforumbalasan')
         .put(jsonku.ubahforumbalasan)
-    app.route('/tampilreply/:forum_id')
+    app.route('/tampilreply/:id') //get specific forum and all their replies
         .get(jsonku.tampilgroupbalasan)
+    app.route('/tampilforumreply') //get specific forum and all their replies
+        .get(jsonku.tampilsemuaforumreply)
 
     //journal
     app.route('/tambahjurnal')

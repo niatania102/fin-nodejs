@@ -119,12 +119,24 @@ exports.ubahforumbalasan = function(req,res) {
         });
 };
 
-//menampilkan balasan jurnal
+//menampilkan balasan jurnal berdasarkan forum id
 exports.tampilgroupbalasan = function(req,res){
-    let forum_id = req.params.forum_id;
+    let id = req.params.id;
 
-    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.reply_id, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id WHERE fh.forum_id = ? ORDER BY topic'
-    [forum_id],
+    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.reply_id, fr.replies FROM forum_header AS fh left JOIN forum_replies AS fr ON fh.forum_id = fr.forum_id WHERE fh.forum_id = ?',
+    [id],
+        function(error,rows,fields){
+            if(error){
+                connection.log(error)
+            }else {
+                response.ok(rows,res)
+            }
+        });
+}
+
+//menampilkan balasan jurnal semua forum dan reply-replynya
+exports.tampilsemuaforumreply = function(req,res){
+    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.reply_id, fr.replies FROM forum_header AS fh left JOIN forum_replies AS fr ON fh.forum_id = fr.forum_id',
         function(error,rows,fields){
             if(error){
                 connection.log(error)
