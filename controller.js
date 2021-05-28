@@ -71,7 +71,7 @@ exports.ubahforum = function(req,res){
 
 //menampilkan topic forum header group
 exports.tampilgroupforum = function(req,res){
-    connection.query('SELECT u.username, u.full_name, f.forum_id, f.topic, f.content FROM forum_header AS f JOIN users AS u WHERE f.user_id = u.id',
+    connection.query('SELECT u.id, u.username, u.full_name, f.forum_id, f.topic, f.content FROM forum_header AS f JOIN users AS u WHERE f.user_id = u.id',
         function(error, rows,fields){
             if(error){
                 connection.log(error);
@@ -121,7 +121,7 @@ exports.ubahforumbalasan = function(req,res) {
 
 //menampilkan balasan jurnal
 exports.tampilgroupbalasan = function(req,res){
-    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id ORDER BY topic',
+    connection.query('SELECT fh.forum_id, fh.topic, fh.content, fr.reply_id, fr.replies FROM `forum_header` AS fh left JOIN `forum_replies` AS fr ON fh.forum_id = fr.forum_id ORDER BY topic',
         function(error,rows,fields){
             if(error){
                 connection.log(error)

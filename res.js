@@ -14,9 +14,9 @@ exports.oknested = function(values, res){
     //lakukan akumulasi
     const hasil = values.reduce((akumulasikan, item)=>{
         //tentukan key group
-        if(akumulasikan[item.full_name]){
+        if(akumulasikan[item.id]){
             //buat variabel group nama user
-            const group = akumulasikan[item.full_name];
+            const group = akumulasikan[item.id];
             //cek jika isi array adalah forum
             if(Array.isArray(group.topic)){ //topik yang sama yang dimiliki seorang user
                 //tambah value ke dalam group forum
@@ -36,7 +36,7 @@ exports.oknested = function(values, res){
             }
         }
         else{
-            akumulasikan[item.full_name] = item;
+            akumulasikan[item.id] = item;
         }
         return akumulasikan;
     }, {});
@@ -63,8 +63,13 @@ exports.oknestedreply = function(values, res){
                 //tambah value ke dalam group forum
                 group.replies.push(item.replies)
             }
+            else if(Array.isArray(group.reply_id)){ //topik yang sama yang dimiliki seorang user
+                //tambah value ke dalam group forum
+                group.reply_id.push(item.reply_id)
+            }
             else{
                 group.replies = [group.replies, item.replies];
+                group.reply_id = [group.reply_id, item.reply_id];
             }
         }
         else{
