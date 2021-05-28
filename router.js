@@ -1,17 +1,16 @@
 'use strict';
 
 const multer = require('multer');
-const path = require("path");
 
 //storage engine
 const storage = multer.diskStorage({
     destination: 'certificate',
     filename: (req,file,cb)=>{ //cb=callback
-        return cb(null, Date.now() + '.' + file.mimetype.split('/')[1])
+        // return cb(null, Date.now() + '.' + file.mimetype.split('/')[1])
+        return cb(null, file.originalname) //nama original dari gambar yang diupload
     }
 })
 const upload = multer({storage: storage});
-
 
 
 
